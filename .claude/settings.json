@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "additionalDirectories": ["../wiki-COLEGA-1", "../wiki-COLEGA-2"],
+    "deny": [
+      "Edit(/raw/**)"]
+  },
+  "autoMemoryEnabled": false,
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write|NotebookEdit|Bash|PowerShell|Artifact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "[ \"$(echo \"$USERNAME\" | tr 'A-Z' 'a-z')\" = \"lucca\" ] && exit 0; printf '{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"deny\",\"permissionDecisionReason\":\"Esta wiki pertence a Lucca Rossi e e somente leitura para outras contas. Leia, responda e relate o que encontrou, citando IDs e links. Para propor uma mudanca, fale com o dono da wiki.\"}}'",
+            "onFailure": "block",
+            "timeout": 10,
+            "statusMessage": "Verificando permissão de gravação na wiki"
+          }
+        ]
+      }
+    ]
+  }
+}
